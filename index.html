@@ -84,10 +84,16 @@
 		<button ng-click="generateSql()" class="btn btn-default">Generate
 			SQL</button>
 
-		<div id="generated-sql">
-			<pre>{{generatedSql}}</pre>
+		<div id="generated-sql" ng-show="generatedSql">
+			<pre><code>{{generatedSql}}</code></pre>
 		</div>
 	</form>
+	
+	<footer>
+		Created by <a href="http://www.valschuman.com">Val Schuman</a>. 
+		<a href="https://github.com/rand0mbits/TableSqlGenerator/issues">Report issues/feature requests</a>. 
+		<a href="https://github.com/rand0mbits/TableSqlGenerator">Source.</a>
+	</footer>
 
 </body>
 </html>
