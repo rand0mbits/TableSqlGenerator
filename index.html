@@ -2,18 +2,18 @@
 <html lang="en" data-framework="angularjs" ng-app="app">
 <head>
 <title>test</title>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <!-- Optional theme -->
 <link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 <!-- Latest compiled and minified JavaScript -->
 <script
-	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="js/app.js"></script>
 <link rel="stylesheet" href="css/main.css" />
 
@@ -42,25 +42,40 @@
 						class="btn btn-default btn-xs remove-field-btn">x</button>
 					<label class="control-label">Name</label> <input type="text"
 						ng-model="field.name" class="form-control"
-						placeholder="Field name" /> <select
+						placeholder="Field name" />
+					<select
 						ng-options="fieldType.type as fieldType.type for fieldType in fieldTypes"
-						ng-model="field.type" class="form-control"></select> <input
+						ng-model="field.type" class="form-control"></select>
+					<input
 						type="text" ng-model="field.value" ng-show="field.type == 'value'"
 						class="form-control" placeholder="Field value" />
 					<div class="form-group" ng-show="field.type == 'iterator'">
-						<label class="control-label">Iterator Type</label> <select
+						<label class="control-label">Iterator Type</label>
+						<select
 							ng-options="iteratorType.type as iteratorType.type for iteratorType in iteratorTypes"
 							ng-model="field.iterator.type" class="form-control"></select>
 						<div class="form-group" ng-show="field.iterator.type == 'numeric'">
-							<label class="control-label">From</label> <input type="text"
-								ng-model="field.iterator.from" class="form-control" /> <label
-								class="control-label">To</label> <input type="text"
-								ng-model="field.iterator.to" class="form-control" />
+							<label class="control-label">From</label>
+							<input type="text" ng-model="field.iterator.from" class="form-control" />
+							<label class="control-label">To</label>
+							<input type="text" ng-model="field.iterator.to" class="form-control" />
+						</div>
+						<div class="form-group" ng-show="field.iterator.type == 'date'">
+							<label class="control-label">From</label>
+							<input type="text" ng-model="field.iterator.from" class="form-control" /> 
+							<label class="control-label">To</label> 
+							<input type="text" ng-model="field.iterator.to" class="form-control" />
+							<label class="control-label">Step</label> 
+							<select ng-options="dateStep.type as dateStep.type for dateStep in dateSteps"
+								ng-model="field.iterator.dateStep" class="form-control"></select>
+							<div class="form-group" ng-show="field.iterator.dateStep == 'day'">
+								<label class="control-label">Num Days</label> 
+								<input type="text" ng-model="field.iterator.numStepDays" class="form-control" />
+							</div>
 						</div>
 						<div class="form-group" ng-show="field.iterator.type == 'array'">
-							<label for="table-name" class="control-label">Comma
-								Separated Values</label> <input type="text"
-								ng-model="field.iterator.arrayValues" class="form-control"
+							<label for="table-name" class="control-label">Comma Separated Values</label>
+							<input type="text" ng-model="field.iterator.arrayValues" class="form-control"
 								placeholder="(e.g.: 'value1', 'value2', 'value3')" />
 						</div>
 					</div>

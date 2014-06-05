@@ -7,7 +7,8 @@ var app = angular.module('app', []);
 
 app.controller('MainCtrl', function($scope) {
 	$scope.fieldTypes = [{type: 'value'},{type: 'iterator'}];
-	$scope.iteratorTypes = [{type: 'numeric'},{type: 'array'}];
+	$scope.iteratorTypes = [{type: 'numeric'},{type: 'date'},{type: 'array'}];
+	$scope.dateSteps = [{type: 'year'},{type: 'month'},{type: 'day'}];
 	
 	// dummy values to start with
 	$scope.tableName = 'my_table';
