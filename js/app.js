@@ -14,9 +14,10 @@ app.controller('MainCtrl', function($scope, $filter) {
 	// dummy values to start with
 	$scope.tableName = 'my_table';
 	$scope.fields = [
-		{name: 'year_field', type: 'iterator', iterator: { type: 'numeric', from: 2010, to: 2015 }},
 		{name: 'first_name', type: 'value', value: "'john'"},
 		{name: 'last_name', type: 'value', value: "'doe'"},
+		{name: 'year_field', type: 'iterator', iterator: { type: 'numeric', from: 2010, to: 2013 }},
+		{name: 'date_field', type: 'iterator', iterator: { type: 'date', from: '1/1/2010', to: '1/1/2013', dateStepType: 'year', dateStep: 1, }},
 		{name: 'level', type: 'iterator', iterator: { type: 'array', arrayValues: "'level a', 'level b', 'level c'" }},
 	];
 	
@@ -89,7 +90,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 					}
 					field.iterator.values = [];
 					while (from <= to) {
-						field.iterator.values.push($filter('date')(from, 'yyyy-MM-dd'));
+						field.iterator.values.push("'" + $filter('date')(from, 'yyyy-MM-dd') + "'");
 						if (stepType == 'year') {
 							from.setFullYear(from.getFullYear() + step);
 						}
@@ -154,7 +155,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 						}
 						// if not last field, add comma after field value
 						if (k < ($scope.fields.length -1)) {
-							out += ',';
+							out += ', ';
 						}
 					}
 					out += ');\r\n';
