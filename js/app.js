@@ -5,10 +5,11 @@
 'use strict';
 var app = angular.module('app', []);
 
-app.controller('MainCtrl', function($scope) {
+app.controller('MainCtrl', function($scope, $filter) {
+	$scope.filter = $filter;
 	$scope.fieldTypes = [{type: 'value'},{type: 'iterator'}];
 	$scope.iteratorTypes = [{type: 'numeric'},{type: 'date'},{type: 'array'}];
-	$scope.dateSteps = [{type: 'year'},{type: 'month'},{type: 'day'}];
+	$scope.dateStepTypes = [{type: 'year'},{type: 'month'},{type: 'day'}];
 	
 	// dummy values to start with
 	$scope.tableName = 'my_table';
@@ -64,6 +65,30 @@ app.controller('MainCtrl', function($scope) {
 					}
 					for (var j = from; j <= to; j++) {
 						field.iterator.values.push(j);
+					}
+				}
+				// date iterator
+				else if (field.iterator.type == 'date') {
+					var from = new Date(field.iterator.from);
+					var to = new Date(field.iterator.to);
+					var stepType = field.iterator.dateStepType;
+					var step = parseInt(field.iterator.dateStep);
+					if (!stepType || isNaN(from.getTime()) || isNaN(to.getTime()) || isNaN(step)) {
+						alert('Date type iterator value is invalid');
+						return;
+					}
+					field.iterator.values = [];
+					while (from <= to) {
+						field.iterator.values.push($filter('date')(from, 'yyyy-MM-dd'));
+						if (stepType == 'year') {
+							from.setFullYear(from.getFullYear() + step);
+						}
+						else if (stepType == 'month') {
+							from.setMonth(from.getMonth() + step);
+						}
+						else if (stepType == 'day') {
+							from.setDate(from.getDate() + step);
+						}
 					}
 				}
 				// array/list iterator

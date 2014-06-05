@@ -65,13 +65,11 @@
 							<input type="text" ng-model="field.iterator.from" class="form-control" /> 
 							<label class="control-label">To</label> 
 							<input type="text" ng-model="field.iterator.to" class="form-control" />
+							<label class="control-label">Step Type</label> 
+							<select ng-options="dateStepType.type as dateStepType.type for dateStepType in dateStepTypes"
+								ng-model="field.iterator.dateStepType" class="form-control"></select>
 							<label class="control-label">Step</label> 
-							<select ng-options="dateStep.type as dateStep.type for dateStep in dateSteps"
-								ng-model="field.iterator.dateStep" class="form-control"></select>
-							<div class="form-group" ng-show="field.iterator.dateStep == 'day'">
-								<label class="control-label">Num Days</label> 
-								<input type="text" ng-model="field.iterator.numStepDays" class="form-control" />
-							</div>
+							<input type="text" ng-model="field.iterator.dateStep" class="form-control" />
 						</div>
 						<div class="form-group" ng-show="field.iterator.type == 'array'">
 							<label for="table-name" class="control-label">Comma Separated Values</label>
