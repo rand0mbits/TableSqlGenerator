@@ -32,12 +32,6 @@ app.controller('MainCtrl', function($scope) {
 		$scope.fields.splice($scope.fields.indexOf(field),1);
 	};
 	
-	// removes all fields, adds one blank one
-	$scope.resetFields = function() {
-		$scope.fields = [];
-		$scope.addField();
-	}
-	
 	// function to generate the sql from the fields
 	$scope.generatedSql = '';
 	$scope.generateSql = function() {

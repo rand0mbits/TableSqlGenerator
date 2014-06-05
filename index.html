@@ -23,10 +23,7 @@
 			<label for="table-name" class="control-label">Table Name</label> 
 			<input type="text" id="table-name" ng-model="tableName" class="form-control"/>
 		</div>
-		<h3>Fields 
-			<button ng-click="addField()" class="btn btn-default">Add Field</button>
-			<button ng-click="resetFields()" class="btn btn-default">Reset</button>
-		</h3>
+		<h3>Fields <button ng-click="addField()" class="btn btn-default">Add Field</button></h3>
 		
 		<div id="fields">
 			<div ng-repeat="field in fields">
