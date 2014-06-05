@@ -40,6 +40,16 @@ app.controller('MainCtrl', function($scope, $filter) {
 		$scope.addField();
 	}
 	
+	// function executed when a field iterator type is changed by the user
+	$scope.iteratorTypeChanged = function(field) {
+		// reset fields
+		field.iterator.from = undefined;
+		field.iterator.to = undefined;
+		field.iterator.dateStepType = undefined;
+		field.iterator.dateStep = undefined;
+		field.iterator.arrayValues = undefined;
+	}
+	
 	// function to generate the sql from the fields
 	$scope.generatedSql = '';
 	$scope.generateSql = function() {
