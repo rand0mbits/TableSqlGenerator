@@ -1,0 +1,28 @@
+fieldset {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+#generated-sql {
+	margin: 20px;
+}
+
+#fields {
+	background-color: #efefef;
+	margin: 15px 0; 
+}
+
+#fields .table-field-row {
+	position: relative;
+	display: block;
+	padding: 10px;
+	border-bottom: solid 1px #afafaf;
+}
+
+#fields .table-field-row  .remove-field-btn {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
