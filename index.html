@@ -39,7 +39,7 @@
 			<div ng-repeat="field in fields">
 				<div class="form-group table-field-row">
 					<button ng-click="removeField(field)"
-						class="btn btn-default btn-xs remove-field-btn">x</button>
+						class="btn btn-warning btn-sm remove-field-btn glyphicon glyphicon-trash"></button>
 					<label class="control-label">Name</label> <input type="text"
 						ng-model="field.name" class="form-control"
 						placeholder="Field name" />
@@ -81,8 +81,9 @@
 			</div>
 		</div>
 
-		<button ng-click="generateSql()" class="btn btn-default">Generate
-			SQL</button>
+		<div class="text-center">
+			<button ng-click="generateSql()" class="btn btn-primary">Generate SQL</button>
+		</div>
 
 		<div id="generated-sql" ng-show="generatedSql">
 			<pre><code>{{generatedSql}}</code></pre>
