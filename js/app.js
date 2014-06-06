@@ -33,7 +33,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 	
 	// function to remove a field
 	$scope.removeField = function(field) {
-		$scope.model.fields.splice($scope.fields.indexOf(field),1);
+		$scope.model.fields.splice($scope.model.fields.indexOf(field),1);
 	};
 	
 	// removes all fields, adds one blank one
