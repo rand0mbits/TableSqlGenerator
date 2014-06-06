@@ -40,3 +40,19 @@ body > footer {
 	margin-top: 25px;
 	color #999;
 }
+
+.form-control.xl {
+	width: 500px;
+}
+
+.form-control.lg {
+	width: 250px;
+}
+
+.form-control.md {
+	width: 100px;
+}
+
+.form-control.sm {
+	width: 50px;
+}

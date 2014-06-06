@@ -3,7 +3,7 @@
 *
 */
 'use strict';
-var app = angular.module('app', []);
+var app = angular.module('app', ['ui.sortable']);
 
 app.controller('MainCtrl', function($scope, $filter) {
 	$scope.filter = $filter;
@@ -21,6 +21,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 		{name: 'date_field', type: 'iterator', iterator: { type: 'date', from: '1/1/2010', to: '1/1/2013', dateStepType: 'year', dateStep: 1, }},
 		{name: 'level', type: 'iterator', iterator: { type: 'array', arrayValues: "'level a', 'level b', 'level c'" }},
 	];
+	$scope.model.fields[3].iterator.tieTo = $scope.model.fields[2];
 	
 	// function to add a new field
 	$scope.addField = function() {
