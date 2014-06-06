@@ -51,12 +51,22 @@ app.controller('MainCtrl', function($scope, $filter) {
 		field.iterator.arrayValues = undefined;
 	}
 	
+	$scope.tieToListFilter = function(currentField) {
+		(function(currentField){
+			return function(filteredField, currentField) {
+				if (filteredField.type == 'iterator') return true;
+				return false;
+			}
+		})(currentField);
+	}
+	
 	// function to generate the sql from the fields
 	$scope.generatedSql = '';
 	$scope.generateSql = function() {
 		var sql = '';
 		var fieldNames = '';
 		var iteratorFields = [];
+		var iteratorMap = {};
 		// preprocess some things
 		for (var i = 0; i < $scope.fields.length; i++) {
 			var field = $scope.fields[i];
@@ -65,6 +75,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 			if (i < ($scope.fields.length - 1)) fieldNames += ', ';
 			// if field is an iterator, create a "values" array in it containing all values to iterate over
 			if (field.type == 'iterator') {
+
 				// numeric iterator
 				if (field.iterator.type == 'numeric') {
 					field.iterator.values = [];
@@ -112,8 +123,21 @@ app.controller('MainCtrl', function($scope, $filter) {
 				}
 				// create and populate an array of all iterator fields. this step is key to later processing
 				iteratorFields.push(field);
+				// iterator map for quick access to iterators by field name
+				iteratorMap[field.name] = field;
+				// create an array in the iterator field for other iterators to be tied to
+				field.tiedIterators = {};
 			}
-
+		}
+		
+		// run through iterators and attach tieTo iterators
+		for (var i = 0; i < iteratorFields.length; i++) {
+			var iteratorField = iteratorFields[i];
+			if (iteratorField.iterator.tieTo && iteratorField.iterator.tieTo.name.toLowerCase() != 'none') {
+				iteratorMap[iteratorField.iterator.tieTo.name].tiedIterators[iteratorField.name] = iteratorField;
+				iteratorFields.splice(i,1);
+				i--;
+			}
 		}
 		
 		function processIteratorField(iteratorFieldIndex, iteratorsValues) {
@@ -130,6 +154,15 @@ app.controller('MainCtrl', function($scope, $filter) {
 					// create a temp object with the name of the field and its value in the current iteration
 					var tmp = {};
 					tmp[iteratorField.name] = iteratorField.iterator.values[j];
+					// if there are iterators tied to this iterator, get their values too
+					for (var iteratorFieldName in iteratorField.tiedIterators) {
+						var tiedIterator = iteratorField.tiedIterators[iteratorFieldName];
+						if (j < tiedIterator.iterator.values.length) {
+							tmp[tiedIterator.name] = tiedIterator.iterator.values[j];
+						} else {
+							tmp[tiedIterator.name] = 'null';
+						}
+					}
 					// recursive call
 					out += processIteratorField(iteratorFieldIndex + 1, angular.extend(tmp, iteratorsValues));
 				}
@@ -153,6 +186,14 @@ app.controller('MainCtrl', function($scope, $filter) {
 						else if (field.type == 'iterator' && field.name in iteratorsValues) {
 							out += trim(iteratorsValues[field.name]);
 						}
+						else if (field.type == 'iterator' && field.name in iteratorField.tiedIterators) {
+							if (j < iteratorField.tiedIterators[field.name].iterator.values.length) {
+								out += trim(iteratorField.tiedIterators[field.name].iterator.values[j]);
+							}
+							else {
+								out += 'null';
+							}
+						}
 						// if not last field, add comma after field value
 						if (k < ($scope.fields.length -1)) {
 							out += ', ';
@@ -170,5 +211,13 @@ app.controller('MainCtrl', function($scope, $filter) {
 		}
 
 		$scope.generatedSql = out;
+	}
+});
+
+// prepends an element to an array
+app.filter('prependToArray', function() {
+	// push el to arr
+	return function(arr, el) {
+		return [el].concat(arr);
 	}
 });
