@@ -53,20 +53,20 @@
 							ng-model="field.iterator.type" class="form-control" ng-change="iteratorTypeChanged(field)"></select>
 						<div class="form-group" ng-show="field.iterator.type == 'numeric'">
 							<label class="control-label">From</label>
-							<input type="text" ng-model="field.iterator.from" class="form-control" placeholder="1" />
+							<input type="text" ng-model="field.iterator.from" class="form-control" placeholder="eg: 1" />
 							<label class="control-label">To</label>
-							<input type="text" ng-model="field.iterator.to" class="form-control" placeholder="5" />
+							<input type="text" ng-model="field.iterator.to" class="form-control" placeholder="eg: 5" />
 						</div>
 						<div class="form-group" ng-show="field.iterator.type == 'date'">
 							<label class="control-label">From</label>
-							<input type="text" ng-model="field.iterator.from" class="form-control md" placeholder="1/1/2010" /> 
+							<input type="text" ng-model="field.iterator.from" class="form-control md" placeholder="(1/1/2010)" /> 
 							<label class="control-label">To</label> 
-							<input type="text" ng-model="field.iterator.to" class="form-control md" placeholder="1/1/2014" />
+							<input type="text" ng-model="field.iterator.to" class="form-control md" placeholder="(1/1/2014)" />
 							<label class="control-label">Step Type</label> 
 							<select ng-options="dateStepType.type as dateStepType.type for dateStepType in dateStepTypes"
 								ng-model="field.iterator.dateStepType" class="form-control"></select>
 							<label class="control-label">Step</label> 
-							<input type="text" ng-model="field.iterator.dateStep" class="form-control sm" placeholder="1" />
+							<input type="text" ng-model="field.iterator.dateStep" class="form-control sm" placeholder="(1)" />
 						</div>
 						<div class="form-group" ng-show="field.iterator.type == 'array'">
 							<label class="control-label">Comma Separated Values</label>

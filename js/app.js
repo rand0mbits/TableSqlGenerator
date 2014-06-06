@@ -48,8 +48,8 @@ app.controller('MainCtrl', function($scope, $filter) {
 		// reset fields
 		field.iterator.from = undefined;
 		field.iterator.to = undefined;
-		field.iterator.dateStepType = undefined;
-		field.iterator.dateStep = undefined;
+		field.iterator.dateStepType = field.iterator.type == 'date' ? 'year' : undefined;
+		field.iterator.dateStep = field.iterator.type == 'date' ? 1 : undefined;
 		field.iterator.arrayValues = undefined;
 	}
 	
