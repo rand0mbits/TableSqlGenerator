@@ -12,8 +12,9 @@ app.controller('MainCtrl', function($scope, $filter) {
 	$scope.dateStepTypes = [{type: 'year'},{type: 'month'},{type: 'day'}];
 	
 	// dummy values to start with
-	$scope.tableName = 'my_table';
-	$scope.fields = [
+	$scope.model = {};
+	$scope.model.tableName = 'my_table';
+	$scope.model.fields = [
 		{name: 'first_name', type: 'value', value: "'john'"},
 		{name: 'last_name', type: 'value', value: "'doe'"},
 		{name: 'year_field', type: 'iterator', iterator: { type: 'numeric', from: 2010, to: 2013 }},
@@ -23,7 +24,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 	
 	// function to add a new field
 	$scope.addField = function() {
-		$scope.fields.push({
+		$scope.model.fields.push({
 			name: '',
 			type: 'value',
 			value: '',
@@ -32,12 +33,12 @@ app.controller('MainCtrl', function($scope, $filter) {
 	
 	// function to remove a field
 	$scope.removeField = function(field) {
-		$scope.fields.splice($scope.fields.indexOf(field),1);
+		$scope.model.fields.splice($scope.fields.indexOf(field),1);
 	};
 	
 	// removes all fields, adds one blank one
 	$scope.resetFields = function() {
-		$scope.fields = [];
+		$scope.model.fields = [];
 		$scope.addField();
 	}
 	
@@ -61,18 +62,18 @@ app.controller('MainCtrl', function($scope, $filter) {
 	}
 	
 	// function to generate the sql from the fields
-	$scope.generatedSql = '';
+	$scope.model.generatedSql = '';
 	$scope.generateSql = function() {
 		var sql = '';
 		var fieldNames = '';
 		var iteratorFields = [];
 		var iteratorMap = {};
 		// preprocess some things
-		for (var i = 0; i < $scope.fields.length; i++) {
-			var field = $scope.fields[i];
+		for (var i = 0; i < $scope.model.fields.length; i++) {
+			var field = $scope.model.fields[i];
 			// make a comma separated string of all field names
 			fieldNames += field.name;
-			if (i < ($scope.fields.length - 1)) fieldNames += ', ';
+			if (i < ($scope.model.fields.length - 1)) fieldNames += ', ';
 			// if field is an iterator, create a "values" array in it containing all values to iterate over
 			if (field.type == 'iterator') {
 
@@ -168,10 +169,10 @@ app.controller('MainCtrl', function($scope, $filter) {
 				}
 				// last iterator field
 				else {
-					out += 'INSERT INTO ' + $scope.tableName + ' (' + fieldNames + ') VALUES(';
+					out += 'INSERT INTO ' + $scope.model.tableName + ' (' + fieldNames + ') VALUES(';
 					// for all fields
-					for (var k = 0; k < $scope.fields.length; k++) {
-						var field = $scope.fields[k];
+					for (var k = 0; k < $scope.model.fields.length; k++) {
+						var field = $scope.model.fields[k];
 						// if the field is a regular value, not an iterator, just use that value
 						if (field.type == 'value') {
 							out += trim(field.value);
@@ -186,6 +187,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 						else if (field.type == 'iterator' && field.name in iteratorsValues) {
 							out += trim(iteratorsValues[field.name]);
 						}
+						// if the field is an iterator that's tied to this iterator
 						else if (field.type == 'iterator' && field.name in iteratorField.tiedIterators) {
 							if (j < iteratorField.tiedIterators[field.name].iterator.values.length) {
 								out += trim(iteratorField.tiedIterators[field.name].iterator.values[j]);
@@ -195,7 +197,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 							}
 						}
 						// if not last field, add comma after field value
-						if (k < ($scope.fields.length -1)) {
+						if (k < ($scope.model.fields.length -1)) {
 							out += ', ';
 						}
 					}
@@ -210,7 +212,7 @@ app.controller('MainCtrl', function($scope, $filter) {
 			out = processIteratorField(0, []);
 		}
 
-		$scope.generatedSql = out;
+		$scope.model.generatedSql = out;
 	}
 });
 

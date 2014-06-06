@@ -25,7 +25,7 @@
 	<form class="container-fluid form-inline">
 		<div class="form-group">
 			<label for="table-name" class="control-label">Table Name</label> <input
-				type="text" id="table-name" ng-model="tableName"
+				type="text" id="table-name" ng-model="model.tableName"
 				class="form-control" />
 		</div>
 		<h3>
@@ -36,7 +36,7 @@
 		</h3>
 
 		<div id="fields">
-			<div ng-repeat="field in fields">
+			<div ng-repeat="field in model.fields">
 				<div class="form-group table-field-row">
 					<button ng-click="removeField(field)"
 						class="btn btn-warning btn-sm remove-field-btn glyphicon glyphicon-trash"></button>
@@ -79,7 +79,7 @@
 						<div class="form-group">
 							<label class="control-label">Tie iterator to</label>
 							<select class="form-control" ng-model="field.iterator.tieTo" 
-								ng-options="field as field.name for field in fields | filter:{type:'iterator', name: '!' + field.name} | prependToArray: {name: 'None'}"></select>
+								ng-options="field as field.name for field in model.fields | filter:{type:'iterator', name: '!' + field.name} | prependToArray: {name: 'None'}"></select>
 						</div>
 					</div>
 				</div>
@@ -91,7 +91,7 @@
 		</div>
 
 		<div id="generated-sql" ng-show="generatedSql">
-			<pre><code>{{generatedSql}}</code></pre>
+			<pre><code>{{model.generatedSql}}</code></pre>
 		</div>
 	</form>
 	
