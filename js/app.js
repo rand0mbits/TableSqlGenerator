@@ -136,6 +136,13 @@ app.controller('MainCtrl', function($scope, $filter) {
 		for (var i = 0; i < iteratorFields.length; i++) {
 			var iteratorField = iteratorFields[i];
 			if (iteratorField.iterator.tieTo && iteratorField.iterator.tieTo.name.toLowerCase() != 'none') {
+				var iteratorToTieTo = iteratorMap[iteratorField.iterator.tieTo.name];
+				// if iterator is tying to another iterator that ties back to itself, tell the user that this is not allowed and exit
+				if (iteratorToTieTo.iterator.tieTo && iteratorToTieTo.iterator.tieTo === iteratorField) {
+					alert('Iterator "' + iteratorField.name + '" ties to iterator "' + iteratorToTieTo.name + '", which ties back to "' + iteratorField.name + '".\n\n'
+						+ 'Two way tying is not allowed. Exiting...');
+						return;
+				}
 				iteratorMap[iteratorField.iterator.tieTo.name].tiedIterators[iteratorField.name] = iteratorField;
 				iteratorFields.splice(i,1);
 				i--;
